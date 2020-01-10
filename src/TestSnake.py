@@ -1,4 +1,4 @@
-﻿from random import randint
+﻿<from random import randint
 
 
 
@@ -12,7 +12,7 @@ class Case(): #initiation de ce qu'est une case du jeu
     def getVal(self):
         return self.valeur
 
-class Ligne(): #initiation d'une ligne du jeu
+class Ligne: #initiation d'une ligne du jeu
     def __init__(self, taille = 10):#la taille de la ligne est changeable
         self.taille = taille
         self.LigneCase = []
