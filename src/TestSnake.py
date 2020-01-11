@@ -10,7 +10,7 @@ class Case():
 
     def __str__(self):
     	#ressort la valeur de la case
-        return "{" + str(self.valeur) + "}"
+        return "[" + str(self.valeur) + "]"
 
     def getVal(self):
         return self.valeur
@@ -24,17 +24,21 @@ class Ligne:
     def __init__(self, taille = 10):
     	#la taille de la ligne est changeable
         self.taille = taille
-        self.LigneCase = []
+        self.ligneCase = []
         for i in range(taille):
         	#rempli la ligne du nombre de cases nécéssaires
-            self.LigneCase.append(Case(1))
+            self.ligneCase.append(Case(1))
 
     def __str__(self):
     	#ressort le contenu de la ligne
         resultat = ""
-        for elem in self.LigneCase :
+        for elem in self.ligneCase :
             resultat = resultat + str(elem) + ","
         return resultat
+
+    def reloadLigne(self):
+        for obj in self.ligneCase :
+            obj.reloadCase()
 
 
 class Grille():
@@ -56,11 +60,9 @@ class Grille():
         return resultat
 
 
-    def reload(self):
-        for elem in range(len(self.ColoneCase)) :
-            for elem2 in self.ColoneCase[elem] :
-                if elem > 0 :
-                    elem = elem - 1
+    def reloadGrille(self):
+        for obj in self.ColoneCase :
+            obj.reloadLigne()
 
 
 class Snake():
@@ -103,12 +105,7 @@ class Jeu():
         return resultat
 
     def reload(self):
-        #for elem in self.grille :
-
-        #    for elem2 in elem :
-        #        if elem2 > 0 :
-        #            elem2 = elem2 - 1
-        self.grille.reload()
+        self.grille.reloadGrille()
 
 
 
