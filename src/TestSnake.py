@@ -40,6 +40,9 @@ class Ligne:
         for obj in self.ligneCase :
             obj.reloadCase()
 
+    def snakeMoveLigne(self, xtete, valQueue):
+        self.ligneCase[xtete].valeur = valQueue 
+
 
 class Grille():
 	#initiation de la grille de jeu à trevers une colonne
@@ -64,11 +67,14 @@ class Grille():
         for obj in self.ColoneCase :
             obj.reloadLigne()
 
+    def snakeMoveGrille(self,xtete,ytete,valQueue):
+        self.ColoneCase[ytete].snakeMoveLigne(xtete,valQueue)
+
 
 class Snake():
 	#initiation du serpent et des coordonnées de sa tete
-    def __init__(self, Xtete = 1,ytete = 1, valQueue = 1):
-        self.xtete = Xtete
+    def __init__(self, xtete = 0,ytete = 0, valQueue = 1):
+        self.xtete = xtete
         self.ytete = ytete
         self.valQueue = valQueue
         #permet de savoir la taille de la queue du serpent
@@ -107,12 +113,17 @@ class Jeu():
     def reload(self):
         self.grille.reloadGrille()
 
+    def snakeMove(self):
+        self.grille.snakeMoveGrille(self.snake.xtete,self.snake.ytete,self.snake.valQueue)
+
 
 
 def main():
     jeu = Jeu(5)
     print(jeu)
     jeu.reload()
+    print(jeu)
+    jeu.snakeMove()
     print(jeu)
 
 
