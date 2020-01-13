@@ -19,6 +19,7 @@ class Case():
     	if self.valeur > 0 :
     		self.valeur = self.valeur - 1
 
+
 class Ligne:
 	#initiation d'une ligne du jeu
     def __init__(self, taille = 10):
@@ -41,7 +42,10 @@ class Ligne:
             obj.reloadCase()
 
     def snakeMoveLigne(self, xtete, valQueue):
-        self.ligneCase[xtete].valeur = valQueue 
+        self.ligneCase[xtete].valeur = valQueue
+
+    def pommePosLigne(self, xpomme):
+        self.ligneCase[xpomme].valeur = -1
 
 
 class Grille():
@@ -70,6 +74,9 @@ class Grille():
     def snakeMoveGrille(self,xtete,ytete,valQueue):
         self.ColoneCase[ytete].snakeMoveLigne(xtete,valQueue)
 
+    def pommePosGrille(self, xpomme, ypomme):
+        self.ColoneCase[ypomme].pommePosLigne(xpomme)
+
 
 class Snake():
 	#initiation du serpent et des coordonnées de sa tete
@@ -84,10 +91,13 @@ class Snake():
         reslutat = "pos : [" + self.xtete + "," + self.ytete + "] taille :" + self.valQueue
         return reslutat
 
+    def manger(self):
+        self.valQueue = self.valQueue + 1
+
 
 class Pomme():
 	#initialisation de la pomme et de ses coordonées
-    def __init__(self, Xpomme, Ypomme) :
+    def __init__(self, Xpomme = 1, Ypomme = 1) :
         self.Xpomme = Xpomme
         self.Ypomme = Ypomme
 
@@ -96,6 +106,10 @@ class Pomme():
         resultat = "[" + self.Xpomme + "," + self.Ypomme + "]"
         return resultat
 
+    def Positionnement(self, taille):
+        self.Xpomme = randint(0,taille-1)
+        self.Ypomme = randint(0,taille-1)
+
 
 class Jeu():
 	#mise en place du jeu, qui gerera le déroulement de la partie
@@ -103,6 +117,7 @@ class Jeu():
         self.taille = taille
         self.grille = Grille(taille)
         self.snake = Snake()
+        self.pomme = Pomme()
         #self.grille.append(Grille(taille))
 
     def __str__(self):
@@ -116,6 +131,9 @@ class Jeu():
     def snakeMove(self):
         self.grille.snakeMoveGrille(self.snake.xtete,self.snake.ytete,self.snake.valQueue)
 
+    def pommePos(self):
+        self.pomme.Positionnement(self.taille)
+        self.grille.pommePosGrille(self.pomme.Xpomme, self.pomme.Ypomme)
 
 
 def main():
@@ -125,7 +143,10 @@ def main():
     print(jeu)
     jeu.snakeMove()
     print(jeu)
-
+    jeu.pommePos()
+    print(jeu)
+    jeu.reload()
+    print(jeu)
 
 if __name__ == "__main__" :
     main()
