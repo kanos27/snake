@@ -47,6 +47,9 @@ class Ligne:
     def pommePosLigne(self, xpomme):
         self.ligneCase[xpomme].valeur = -1
 
+    def checkPosPommeLigne(self, Xpomme):
+        return self.ligneCase[Xpomme].valeur
+
 
 class Grille():
 	#initiation de la grille de jeu à trevers une colonne
@@ -76,6 +79,9 @@ class Grille():
 
     def pommePosGrille(self, xpomme, ypomme):
         self.ColoneCase[ypomme].pommePosLigne(xpomme)
+
+    def checkPosPommeGrille(self, Xpomme, Ypomme):
+        return self.ColoneCase[Ypomme].checkPosPommeLigne(Xpomme)
 
 
 class Snake():
@@ -132,8 +138,14 @@ class Jeu():
         self.grille.snakeMoveGrille(self.snake.xtete,self.snake.ytete,self.snake.valQueue)
 
     def pommePos(self):
-        self.pomme.Positionnement(self.taille)
+        bonnePos = 1
+        while bonnePos != 0 :
+            self.pomme.Positionnement(self.taille)
+            bonnePos = self.checkPosPomme()
         self.grille.pommePosGrille(self.pomme.Xpomme, self.pomme.Ypomme)
+
+    def checkPosPomme(self):
+        return self.grille.checkPosPommeGrille(self.pomme.Xpomme,self.pomme.Ypomme)
 
 
 def main():
